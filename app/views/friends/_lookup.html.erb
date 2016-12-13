@@ -4,7 +4,7 @@
   <div class="form-group ro no-padding text-center col-md-12">
     <div class="col-md-10">
       <%= text_field_tag :search_param, params[:search_param], 
-                          placeholder: "first name, last name, or emai", autofocus: true,
+                          placeholder: "first name, last name, or email", autofocus: true,
                           class: 'form-control search-box input-lg' %>
     </div>
     <div class="col-md-2">
@@ -15,7 +15,7 @@
   </div>
   <% end %>
   <%= render 'common/spinner' %>
-  <% if @users %>
+  <% if @users %> <!-- @users is results from search -->
     <% if @users.size > 0 %>
       <div id="friend-lookup-results" class="well results-block col-md-10">
         <table class="search-results-table col-md-12">
@@ -27,7 +27,7 @@
               <td><strong>Profile:</strong><%= link_to "Add to my friends", user_path(user),
                                             class: "btn btn-xs btn-success" %>
                 <% if current_user.not_friends_with?(user.id) %>
-                  <%= link_to "Add as my friend", add_friend_path(user: currrent_user, friend: user),
+                  <%= link_to "Add as my friend", add_friend_path(user: current_user, friend: user),
                             class: "btn btn-xs btn-success", method: :post %>
                 <% else %>
                   <span class="label label-primary">
