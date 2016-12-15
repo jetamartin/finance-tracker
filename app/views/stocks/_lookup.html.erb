@@ -1,7 +1,11 @@
 <div id="stock-lookup">
   <h3>Search for Stocks</h3>
+  <!-- Stock Search/Lookup Form-->
+  <!-- Input will be submitted to server via AJAX as noted by 'remote: true' parameter-->
+  <!-- An ID form is required so that we can refer to it in jquery/js code (stock.js) 
+      where AJAX/JSON repsonse is handled -->
   <%= form_tag search_stocks_path, remote: true, method: :get, id: 'stock-lookup-form' do %>
-  <div class="form-group ro no-padding text-center col-md-12">
+  <div class="form-group row no-padding text-center col-md-12">
     <div class="col-md-10">
       <%= text_field_tag :stock, params[:stock], placeholder: "Stock ticker symbol", autofocus: true,
                                                           class: 'form-control search-box input-lg' %>
@@ -13,7 +17,12 @@
     </div>
   </div>
   <% end %>
+  
+  
+  <!--Spinner symbol shown while waiting for stock lookups results to be returned -->
   <%= render 'common/spinner' %>
+  
+  <!-- Stock lookup results -->
   <% if @stock %>
     <div id="stock-lookup-results" class="well results-block">
       <strong>Symbol:&nbsp</strong><%= @stock.ticker %>&nbsp
@@ -36,6 +45,5 @@
       <% end %>
     </div>
   <% end %>
-  <div id="stock-lookup-errors">
-  </div>
+  <div id="stock-lookup-errors"></div>
 </div>
