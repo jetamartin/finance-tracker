@@ -25,18 +25,21 @@ class UserStocksController < ApplicationController
   # POST /user_stocks.json
   def create
     # debugger
+    # If no stock_id then it was not previously in DB and we'll need to create a
+    # new entry in the DB
     if params[:stock_id].present?
      @user_stock = UserStock.new(stock_id: params[:stock_id], user: current_user)
-    else # Check DB to see if stock already in DB 
+    else # Check DB to see if stock already in DB -- redundant check
       stock = Stock.find_by_ticker(params[:stock_ticker])
-      if stock 
+      if stock # Stock found in DB set up Association with this stock_id
         @user_stock = UserStock.new(user: current_user, stock: stock)
       else # Stock not found in DB so look it up via external service
         stock = Stock.new_from_lookup(params[:stock_ticker])
-        if stock.save
-          #Note: Through magic of Rails it knows to use user_id & stock_id even though we pass entire stock and user object
+        if stock.save #stock was found and saved to DB.
+          #Note: Through magic of Rails it knows to use user_id & stock_id even though we reference
+          # entire stock and user object
           @user_stock = UserStock.new(user: current_user, stock: stock)
-        else
+        else #Stock could not be found by ticker provided..set flash message
           @user_stock = nil
           flash[:error] = "Stock is not available"
         end

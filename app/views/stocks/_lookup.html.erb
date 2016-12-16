@@ -28,18 +28,21 @@
       <strong>Symbol:&nbsp</strong><%= @stock.ticker %>&nbsp
       <strong>Name:&nbsp</strong><%= @stock.name %>&nbsp
       <strong>Price&nbsp</strong><%= @stock.price %>&nbsp
-      <%# debugger %>
       <% if current_user.can_add_stock?(@stock.ticker) %>
+      <!-- Create association -->
+      <!--If the stock was already tracked it will have a stock_id otherwise you
+          want to set to blank and then create new stock DB recored in the create action of UserStocks controller -->
+        <!-- Note: that link specifies Post operation...this is needed because we are creating association in DB on server -->
         <%= link_to "Add to my Stocks", user_stocks_path(user: current_user, stock_ticker: @stock.ticker, 
                                     stock_id: @stock_id ? @stock.id : ''), class: 'btn btn-xs btn-success', method: :post %>
-      <% else %>
+      <% else %> <!-- can't add stock because of limit or already added --> 
         <span class="label label-default">
           Stock cannot be added because you have already added
           <% if !current_user.under_stock_limit? %>
-          10 stocks
+            10 stocks
           <% end %>
           <% if current_user.stock_already_added?(@stock.ticker) %>
-          this stock
+            this stock
           <% end %>
         </span>      
       <% end %>
