@@ -75,6 +75,7 @@ class UserStocksController < ApplicationController
   # DELETE /user_stocks/1
   # DELETE /user_stocks/1.json
   def destroy
+    # debugger
     @user_stock.destroy
     respond_to do |format|
       format.html { redirect_to my_portfolio_path, notice: 'Stock was successfully removed from your portfolio' }
@@ -85,6 +86,7 @@ class UserStocksController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user_stock
+      # debugger
       @user_stock = UserStock.find(params[:id])
     end
 
