@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   def my_portfolio
+    # debugger
     @user_stocks = current_user.user_stocks
     @user = current_user
   end
@@ -30,8 +31,9 @@ class UsersController < ApplicationController
   end
   
   def show
+    # debugger
     @user = User.find(params[:id])
-    @user_stocks = @user.stocks
+    @user_stocks = @user.user_stocks
   end
   
 end
